@@ -1,0 +1,19 @@
+image: python:3.11
+
+stages:
+  - test
+
+before_script:
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+  - playwright install chromium
+
+test_playwright:
+  stage: test
+  script:
+    - pytest test --html=report.html --self-contained-html
+  artifacts:
+    when: always
+    paths:
+      - report.html
+    expire_in: 7 days
